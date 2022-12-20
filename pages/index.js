@@ -10,6 +10,7 @@ const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [modalUrl, setModalUrl] = useState("");
+  const prefix = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
     <div className={styles.container + " " + styles.containerBackground}>
       <Modal isOpen={open} toggle={() => setOpen(false)}>
@@ -47,8 +48,7 @@ export default function Home() {
           </span>
         </h1>
         <Image
-          src="/assets/profile_img.png"
-          alt="Vercel Logo"
+          src={`${prefix}/assets/profile_img.png`}
           className={styles.profilePhoto}
           width={100}
           height={100}
@@ -121,7 +121,7 @@ export default function Home() {
               <p>Aug 2017 - Nov 2017</p>
             </div>
             <div className={styles.careerFlex}>
-              {process.env.ON_GITHUB_PAGES +'  test process'}
+              {process.env.ON_GITHUB_PAGES + "  test process"}
               <h3>
                 <a
                   onClick={() => {
