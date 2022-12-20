@@ -9,11 +9,12 @@ on:
   push:
     branches: ["main"]
 
-  env:
-    ON_GITHUB_PAGES: ${{secrets.ON_GITHUB_PAGES}}
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  ON_GITHUB_PAGES: ${{secrets.ON_GITHUB_PAGES}}
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
