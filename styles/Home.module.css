@@ -2,10 +2,6 @@
   padding: 0 2rem;
 }
 
-.containerBackground {
-  background-color: gray;
-}
-
 .title_word {
   animation: color-animation 4s linear infinite;
 }
@@ -56,6 +52,12 @@
   position: relative;
   display: inline-block;
   animation: flip 2s infinite;
+  color: purple;
+}
+
+.profilePhoto{
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 @keyframes flip {
@@ -65,9 +67,81 @@
   }
 }
 
+.careerSection {
+  text-align: center;
+  width: 100%;
+  border-top: solid 2px purple;
+  border-bottom: solid 2px purple;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.careerSection + .careerSection{
+  border-top: unset;
+}
+
+
+.projectTitle{
+  text-align: center;
+  padding-top: 8px;
+}
+
+.careerFlex {
+  padding-top: 10px;
+}
+.modalContainer {
+  min-height: 400px;
+}
+
+@media (min-width: 1024px) {
+  .positionContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .careerFlex {
+    flex: 1;
+    padding: unset;
+  }
+
+  .profilePhoto{
+    height: 200px;
+    width: 200px;
+  }
+}
+
+.anchor:hover{
+  color: #926C8D;
+  cursor: pointer;
+}
+
+.hover_underline_animation {
+  display: inline-block;
+  position: relative;
+  color: purple;
+}
+
+.hover_underline_animation::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #926C8D;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover_underline_animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  /* padding: 4rem 0; */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -79,9 +153,9 @@
   display: flex;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .footer a {
