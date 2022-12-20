@@ -121,7 +121,6 @@ export default function Home() {
               <p>Aug 2017 - Nov 2017</p>
             </div>
             <div className={styles.careerFlex}>
-              {process.env.ON_GITHUB_PAGES + "  test process"}
               <h3>
                 <a
                   onClick={() => {
