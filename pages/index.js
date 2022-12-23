@@ -49,6 +49,7 @@ export default function Home() {
         </h1>
         <Image
           src={`${prefix}/assets/profile_img.png`}
+          alt="Profile Photo"
           className={styles.profilePhoto}
           width={100}
           height={100}
@@ -95,7 +96,7 @@ export default function Home() {
                   }
                   href="https://www.srx.com.sg/"
                 >
-                  Streetsine Singapore Pte Ltd
+                  Streetsine
                 </a>
               </h3>
               <b>Mobile App Developer</b>
