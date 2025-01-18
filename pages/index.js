@@ -5,12 +5,14 @@ import { Modal, ModalBody, ModalHeader, Button } from "reactstrap";
 import styles from "../styles/Home.module.css";
 
 import dynamic from "next/dynamic";
+import { useCollapse } from "react-collapsed";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [modalUrl, setModalUrl] = useState("");
   const prefix = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
   return (
     <div className={styles.container + " " + styles.containerBackground}>
       <Modal isOpen={open} toggle={() => setOpen(false)}>
@@ -80,6 +82,20 @@ export default function Home() {
                   className={
                     styles.hover_underline_animation + " " + styles.anchor
                   }
+                  href="https://www.cognizant.com/"
+                >
+                  Cognizant Technology Solutions
+                </a>
+              </h3>
+              <b>Associate (Frontend)</b>
+              <p>Mar 2023 - Present</p>
+            </div>
+            <div className={styles.careerFlex}>
+              <h3>
+                <a
+                  className={
+                    styles.hover_underline_animation + " " + styles.anchor
+                  }
                   href="https://www.99.co/"
                 >
                   99.co
@@ -107,6 +123,28 @@ export default function Home() {
         <section className={styles.careerSection}>
           <h2>Project</h2>
           <div className={styles.positionContainer}>
+            <div className={styles.careerFlex}>
+              <a
+                href="https://tutorial-jobify-dribrwuq5-kohchenggees-projects.vercel.app/"
+                className={
+                  styles.hover_underline_animation + " " + styles.anchor
+                }
+              >
+                <h3>Jobify</h3>
+              </a>
+              <p className={styles.tech_stack_card}>
+                <b {...getToggleProps()}>Techstack</b>
+              </p>  
+              <div className={styles.tech_stack} {...getCollapseProps()}>
+                <ul >
+                  <li>NextJs</li>
+                  <li>Nx Monorepo</li>
+                  <li>Prisma</li>
+                  <li>TailwindCss</li>
+                  <li>Shadcn</li>
+                </ul>
+              </div>
+            </div>
             <div className={styles.careerFlex}>
               <a
                 onClick={() => {

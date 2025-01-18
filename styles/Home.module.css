@@ -87,7 +87,7 @@
 }
 
 .careerFlex {
-  padding-top: 10px;
+  margin-top: 20px;
 }
 .modalContainer {
   min-height: 400px;
@@ -139,6 +139,27 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+.tech_stack_card{
+  padding-left: 100px;
+  padding-right: 100px;
+  /* text-align: left; */
+
+}
+
+.tech_stack{
+  /* display: flex;
+  justify-content: center; */
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.tech_stack ul {
+  list-style-type: none;
+  padding:0;
+  margin:0;
+}
+
 .main {
   min-height: 100vh;
   /* padding: 4rem 0; */
