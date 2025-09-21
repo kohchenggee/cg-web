@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FC, ReactNode, useMemo, useRef, useState } from "react";
+import { FC, ReactNode, Suspense, useMemo, useRef, useState } from "react";
 // import { Modal, ModalBody, ModalHeader,  } from "reactstrap";
 import { useCollapse } from "react-collapsed";
 import ReactPlayer from "react-player";
@@ -18,7 +18,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Canvas, useThree } from "@react-three/fiber";
-import { Environment, Sphere } from "@react-three/drei";
+import { Environment, Html, Sphere, useProgress } from "@react-three/drei";
 import { Group, MeshPhysicalMaterial, type Object3DEventMap } from "three";
 import Camera from "./Camera";
 
@@ -29,6 +29,21 @@ export default function Home() {
   const [modalUrl, setModalUrl] = useState("");
   const prefix = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
+  const [loaded, setLoading] = useState(false);
+
+  const Loader = () => {
+    const { progress } = useProgress();
+    if (progress === 100) {
+      setTimeout(() => {
+        setLoading(true);
+      }, 0);
+    }
+    return (
+      <Html center>
+        <div className="text-white text-xl">Loading...</div>
+      </Html>
+    );
+  };
 
   const FixedGroup: FC = () => {
     // Random radius between 0.1 and 0.25
@@ -62,140 +77,142 @@ export default function Home() {
     href?: string;
   };
 
-  const SECTIONS: SectionContent[] = [
-    {
-      body: (
-        <>
-          <h1 className={styles.title}>
-            <span className="animate-flip relative inline-block text-cyan-500 [animation-delay:calc(0.2s*0)]">
-              C
-            </span>
-            <span className="animate-flip relative inline-block text-purple-300 [animation-delay:calc(0.2s*1)]">
-              G
-            </span>
-          </h1>
-          <Image
-            src={`${prefix}/assets/profile_img.png`}
-            alt="Profile Photo"
-            className={styles.profilePhoto}
-            width={100}
-            height={100}
-          />
+  const SECTIONS: SectionContent[] = useMemo(() => {
+    return [
+      {
+        body: (
+          <>
+            <h1 className={styles.title}>
+              <span className="animate-flip relative inline-block text-cyan-500 [animation-delay:calc(0.2s*0)]">
+                C
+              </span>
+              <span className="animate-flip relative inline-block text-purple-300 [animation-delay:calc(0.2s*1)]">
+                G
+              </span>
+            </h1>
+            <Image
+              src={`${prefix}/assets/profile_img.png`}
+              alt="Profile Photo"
+              className={styles.profilePhoto}
+              width={100}
+              height={100}
+            />
 
-          <h2 className={styles.description}>
-            Hi, I am{" "}
-            <span className={styles.title_word + " " + styles.title_word_1}>
-              Koh{" "}
-            </span>
-            <span className={styles.title_word + " " + styles.title_word_2}>
-              Cheng{" "}
-            </span>
-            <span className={styles.title_word + " " + styles.title_word_3}>
-              Gee
-            </span>
-          </h2>
+            <h2 className={styles.description}>
+              Hi, I am{" "}
+              <span className={styles.title_word + " " + styles.title_word_1}>
+                Koh{" "}
+              </span>
+              <span className={styles.title_word + " " + styles.title_word_2}>
+                Cheng{" "}
+              </span>
+              <span className={styles.title_word + " " + styles.title_word_3}>
+                Gee
+              </span>
+            </h2>
 
-          <p className={styles.description}>
-            I am a software engineer based in Singapore.
-          </p>
-        </>
-      ),
-    },
-    {
-      heading: "Career",
-      body: (
-        <div className="flex justify-center gap-8 py-8">
-          <div className="mt-5">
-            <JobCard
-              project={{
-                name: "Cognizant Technology Solutions",
-                url: "https://www.cognizant.com/",
-              }}
-              name="Associate (Frontend)"
-              year="Mar 2023 - Present"
-              list={[
-                "Nx",
-                "ReactJS",
-                "Redux Toolkit",
-                "Typescript",
-                "Playwright",
-                "Jest",
-                "Streamlit",
-                "MUI",
-              ]}
-            />
+            <p className={styles.description}>
+              I am a software engineer based in Singapore.
+            </p>
+          </>
+        ),
+      },
+      {
+        heading: "Career",
+        body: (
+          <div className="flex justify-center gap-8 py-8">
+            <div className="mt-5">
+              <JobCard
+                project={{
+                  name: "Cognizant Technology Solutions",
+                  url: "https://www.cognizant.com/",
+                }}
+                name="Associate (Frontend)"
+                year="Mar 2023 - Present"
+                list={[
+                  "Nx",
+                  "ReactJS",
+                  "Redux Toolkit",
+                  "Typescript",
+                  "Playwright",
+                  "Jest",
+                  "Streamlit",
+                  "MUI",
+                ]}
+              />
+            </div>
+            <div className="mt-5">
+              <JobCard
+                project={{ name: "99.co", url: "https://www.99.co/" }}
+                name="Frontend Software Engineer"
+                year="Dec 2020 - Dec 2022"
+                list={["ReactJS", "Redux Thunk", "Typescript", "Jest"]}
+              />
+            </div>
+            <div className="mt-5">
+              <JobCard
+                project={{ name: "Streetsine", url: "https://www.srx.com.sg/" }}
+                name="Mobile App Developer"
+                year="May 2018 - Dec 2020"
+                list={["React Native", "Javascript", "Redux"]}
+              />
+            </div>
           </div>
-          <div className="mt-5">
-            <JobCard
-              project={{ name: "99.co", url: "https://www.99.co/" }}
-              name="Frontend Software Engineer"
-              year="Dec 2020 - Dec 2022"
-              list={["ReactJS", "Redux Thunk", "Typescript", "Jest"]}
-            />
+        ),
+      },
+      {
+        heading: "Project",
+        body: (
+          <div className="flex justify-center gap-5 py-8">
+            <div className="mt-5">
+              <JobCard
+                project={{
+                  name: "Jobify",
+                  url: "https://tutorial-jobify-dribrwuq5-kohchenggees-projects.vercel.app/",
+                }}
+                year="Dec 2024 - Jan 2025"
+                list={[
+                  "NextJs",
+                  "Nx Monorepo",
+                  "Prisma",
+                  "TailwindCss",
+                  "Shadcn",
+                ]}
+              />
+            </div>
+            <div className="mt-5">
+              <JobCard
+                project={{
+                  name: "The Chosen One",
+                  url: "",
+                  onClick: () => {
+                    setOpen(true);
+                    setModalUrl("https://vimeo.com/782384898");
+                  },
+                }}
+                year="Aug 2017 - Nov 2017"
+                list={["Unity"]}
+              />
+            </div>
+            <div className="mt-5">
+              <JobCard
+                project={{
+                  name: "Trick Tower",
+                  url: "",
+                  onClick: () => {
+                    setOpen(true);
+                    setModalUrl("https://vimeo.com/782427046");
+                  },
+                }}
+                year="May 2018 - Dec 2020"
+                list={["Unreal Engine"]}
+              />
+            </div>
           </div>
-          <div className="mt-5">
-            <JobCard
-              project={{ name: "Streetsine", url: "https://www.srx.com.sg/" }}
-              name="Mobile App Developer"
-              year="May 2018 - Dec 2020"
-              list={["React Native", "Javascript", "Redux"]}
-            />
-          </div>
-        </div>
-      ),
-    },
-    {
-      heading: "Project",
-      body: (
-        <div className="flex justify-center gap-5 py-8">
-          <div className="mt-5">
-            <JobCard
-              project={{
-                name: "Jobify",
-                url: "https://tutorial-jobify-dribrwuq5-kohchenggees-projects.vercel.app/",
-              }}
-              year="Dec 2024 - Jan 2025"
-              list={[
-                "NextJs",
-                "Nx Monorepo",
-                "Prisma",
-                "TailwindCss",
-                "Shadcn",
-              ]}
-            />
-          </div>
-          <div className="mt-5">
-            <JobCard
-              project={{
-                name: "The Chosen One",
-                url: "",
-                onClick: () => {
-                  setOpen(true);
-                  setModalUrl("https://vimeo.com/782384898");
-                },
-              }}
-              year="Aug 2017 - Nov 2017"
-              list={["Unity"]}
-            />
-          </div>
-          <div className="mt-5">
-            <JobCard
-              project={{
-                name: "Trick Tower",
-                url: "",
-                onClick: () => {
-                  setOpen(true);
-                  setModalUrl("https://vimeo.com/782427046");
-                },
-              }}
-              year="May 2018 - Dec 2020"
-              list={["Unreal Engine"]}
-            />
-          </div>
-        </div>
-      ),
-    },
-  ];
+        ),
+      },
+    ];
+  }, []);
 
   type ScenePageProps = {
     position: [number, number, number];
@@ -394,24 +411,28 @@ export default function Home() {
             powerPreference: "high-performance",
           }}
         >
-          <ambientLight intensity={0.5} color="#fff" />
-          {/* Image downloaded from: https://polyhaven.com/hdris */}
-          <Environment
-            files={`${prefix}/assets/puresky.jpg`}
-            background={true}
-            resolution={512}
-            ground={false}
-          />
-          <ScrollingGroup />
-          <FixedGroup />
-          <Camera />
+          <Suspense fallback={<Loader />}>
+            <ambientLight intensity={0.5} color="#fff" />
+            {/* Image downloaded from: https://polyhaven.com/hdris */}
+            <Environment
+              files={`${prefix}/assets/puresky.jpg`}
+              background={true}
+              resolution={512}
+              ground={false}
+            />
+            <ScrollingGroup />
+            <FixedGroup />
+            <Camera />
+          </Suspense>
         </Canvas>
 
-        <div className="relative z-50 w-full">
-          {SECTIONS.map((content, i) => (
-            <Section key={i} {...content} index={i} />
-          ))}
-        </div>
+        {loaded && (
+          <div className="relative z-50 w-full">
+            {SECTIONS.map((content, i) => (
+              <Section key={i} {...content} index={i} />
+            ))}
+          </div>
+        )}
         {/* <Separator />
         <section className="text-center w-full  py-2 px-4">
           <h2 className="text-2xl">Career</h2>
