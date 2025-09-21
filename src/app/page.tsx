@@ -113,6 +113,16 @@ export default function Home() {
               }}
               name="Associate (Frontend)"
               year="Mar 2023 - Present"
+              list={[
+                "Nx",
+                "ReactJS",
+                "Redux Toolkit",
+                "Typescript",
+                "Playwright",
+                "Jest",
+                "Streamlit",
+                "MUI",
+              ]}
             />
           </div>
           <div className="mt-5">
@@ -120,6 +130,7 @@ export default function Home() {
               project={{ name: "99.co", url: "https://www.99.co/" }}
               name="Frontend Software Engineer"
               year="Dec 2020 - Dec 2022"
+              list={["ReactJS", "Redux Thunk", "Typescript", "Jest"]}
             />
           </div>
           <div className="mt-5">
@@ -127,6 +138,7 @@ export default function Home() {
               project={{ name: "Streetsine", url: "https://www.srx.com.sg/" }}
               name="Mobile App Developer"
               year="May 2018 - Dec 2020"
+              list={["React Native", "Javascript", "Redux"]}
             />
           </div>
         </div>
@@ -340,7 +352,7 @@ export default function Home() {
     );
   };
   return (
-    <div >
+    <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
