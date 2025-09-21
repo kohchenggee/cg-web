@@ -34,7 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="grid">
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
           </main>
         </ThemeProvider>
